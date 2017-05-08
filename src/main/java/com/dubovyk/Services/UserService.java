@@ -5,10 +5,12 @@ import com.dubovyk.Domain.User;
 import java.util.List;
 
 /**
- * Created by knidarkness on 08.05.17.
+ * @version 1.0
+ * @author Sergey Dubovyk aka knidarkness
  */
 public interface UserService {
-    void registerUser(User user);
+    boolean registerUser(User user);
+    boolean isAvailableUser(User user);
     boolean isUser(String email, String password);
     List<User> getAll();
 }

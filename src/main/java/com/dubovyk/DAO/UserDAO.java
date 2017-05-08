@@ -3,9 +3,22 @@ package com.dubovyk.DAO;
 import com.dubovyk.Domain.User;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 /**
- * Created by knidarkness on 08.05.17.
+ * This is a Data Access Object for User table in
+ * the database.
+ *
+ * It extends default CRUD logic with methods
+ * to find user by email and password -- to log in,
+ * and check if there exist at least one user
+ * with given email or username -- to check
+ * if we can create such user.
+ *
+ * @version 1.0
+ * @author Sergey Dubovyk aka knidarkness
  */
 public interface UserDAO extends CrudRepository<User, Long>{
     User findUserByEmailAndPasswordHash(String email, String passhash);
+    List<User> findAllByEmailOrUsername(String email, String username);
 }

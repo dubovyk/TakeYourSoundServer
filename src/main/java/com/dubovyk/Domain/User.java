@@ -8,7 +8,8 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Created by knidarkness on 07.05.17.
+ * @version 1.0
+ * @author Sergey Dubovyk aka knidarkness
  */
 @Entity
 public class User {
@@ -24,8 +25,8 @@ public class User {
     private String email;
 
     @Column(name = "reg_date", columnDefinition = "DATETIME")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date regDate;
+    //@Temporal(TemporalType.TIMESTAMP)
+    private String regDate;
 
     public User(){}
 
@@ -33,7 +34,6 @@ public class User {
         this.username = username;
         this.email = email;
         this.passwordHash = passwordHash;
-        this.regDate = new Date();
     }
 
     public Long getId() {
@@ -68,11 +68,11 @@ public class User {
         this.email = email;
     }
 
-    public Date getRegDate() {
+    public String  getRegDate() {
         return regDate;
     }
 
-    public void setRegDate(Date regDate) {
+    public void setRegDate(String regDate) {
         this.regDate = regDate;
     }
 }

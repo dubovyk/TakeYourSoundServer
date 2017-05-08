@@ -9,7 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * Created by knidarkness on 08.05.17.
+ * This is a UserService implementation.
+ *
+ * @version 1.0
+ * @author SergeyDubovyk aka knidarkness
+ *
  */
 @Service("UserService")
 public class UserServiceImpl implements UserService {
@@ -21,10 +25,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public void registerUser(User user){
-        if (!isUser(user.getEmail(), user.getPasswordHash())){
+    public boolean registerUser(User user){
+        if (isAvailableUser(user)) {
             userDAO.save(user);
+            return true;
         }
+        return false;
     }
 
     @Transactional
@@ -35,5 +41,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public List<User> getAll(){
         return (List<User>) userDAO.findAll();
+    }
+
+    @Transactional
+    public boolean isAvailableUser(User user){
+        return userDAO.findAllByEmailOrUsername(user.getEmail(), user.getUsername()).size() == 0;
     }
 }
