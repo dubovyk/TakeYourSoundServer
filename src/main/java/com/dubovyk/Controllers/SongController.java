@@ -1,7 +1,8 @@
 package com.dubovyk.Controllers;
 
 /**
- * Created by knidarkness on 07.05.17.
+ * @version 1.0
+ * @author Nina Bondar aka kaguya
  */
 public class SongController {
 }
