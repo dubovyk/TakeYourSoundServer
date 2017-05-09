@@ -13,4 +13,5 @@ public interface UserService {
     boolean isAvailableUser(User user);
     boolean isUser(String email, String password);
     List<User> getAll();
+    User getByName(String username);
 }
