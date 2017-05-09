@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * @version 1.0
@@ -25,8 +24,11 @@ public class User {
     private String email;
 
     @Column(name = "reg_date", columnDefinition = "DATETIME")
-    //@Temporal(TemporalType.TIMESTAMP)
     private String regDate;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @OneToOne(optional = false)
+    private UserRoles userRoles;
 
     public User(){}
 
@@ -34,6 +36,14 @@ public class User {
         this.username = username;
         this.email = email;
         this.passwordHash = passwordHash;
+    }
+
+    public UserRoles getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(UserRoles userRoles) {
+        this.userRoles = userRoles;
     }
 
     public Long getId() {
@@ -75,4 +85,5 @@ public class User {
     public void setRegDate(String regDate) {
         this.regDate = regDate;
     }
+
 }

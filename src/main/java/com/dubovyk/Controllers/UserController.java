@@ -3,11 +3,7 @@ package com.dubovyk.Controllers;
 import com.dubovyk.Domain.User;
 import com.dubovyk.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * This is a REST API endpoint for users operations.
@@ -19,7 +15,7 @@ import java.util.Date;
  * @author SergeyDubovyk aka knidarkness
  */
 
-@Controller
+@RestController
 @RequestMapping(path = "/user")
 public class UserController {
     private final UserService userService;
@@ -65,10 +61,6 @@ public class UserController {
      */
     @PostMapping(path = "/add")
     public @ResponseBody String addUser(@RequestBody User user){
-        Date now = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String currentDateTime = sdf.format(now);
-        user.setRegDate(currentDateTime);
         if (userService.registerUser(user)){
             return "{\"status\":\"success\"}";
         } else {
