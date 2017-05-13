@@ -30,10 +30,5 @@ public class BandController {
         return "added";
     }
 
-    @GetMapping(path = "/get_before", params = "id")
-    public @ResponseBody Iterable<Band> getBefore(@RequestParam  Long id){
-        return bandService.findWithIdLessThen(id);
-    }
-
 }
 

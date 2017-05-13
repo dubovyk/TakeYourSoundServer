@@ -20,12 +20,13 @@ import java.util.List;
  *
  */
 @Service("UserService")
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends GenericServiceImpl<User, Long> implements UserService {
     private final UserDAO userDAO;
     private final UserRolesDAO userRolesDAO;
 
     @Autowired
     public UserServiceImpl(UserDAO userDAO, UserRolesDAO userRolesDAO) {
+        super(userDAO);
         this.userDAO = userDAO;
         this.userRolesDAO = userRolesDAO;
     }
@@ -67,13 +68,8 @@ public class UserServiceImpl implements UserService {
      * @return Returns true if given valid credentials and false if not.
      */
     @Transactional
-    public boolean isUser(String email, String passhash){
+    public boolean isRegisteredUser(String email, String passhash){
         return userDAO.findUserByEmailAndPasswordHash(email, passhash) != null;
-    }
-
-    @Transactional
-    public List<User> getAll(){
-        return (List<User>) userDAO.findAll();
     }
 
     /**
@@ -86,7 +82,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public User getByName(String username){
+    public User findByName(String username){
         return userDAO.findUserByUsername(username);
     }
 }
