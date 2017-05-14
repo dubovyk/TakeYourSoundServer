@@ -14,9 +14,16 @@ import java.util.List;
  */
 @Service("BandService")
 public class BandServiceImpl extends GenericServiceImpl<Band, Long> implements BandService{
+    private final BandDAO dao;
 
     @Autowired
-    public BandServiceImpl(CrudRepository<Band, Long> dao) {
+    public BandServiceImpl(BandDAO dao) {
         super(dao);
+        this.dao = dao;
+    }
+
+    @Override
+    public Band findBandByName(String name){
+        return dao.findBandByName(name);
     }
 }

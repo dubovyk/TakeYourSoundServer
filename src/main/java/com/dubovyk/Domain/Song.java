@@ -1,6 +1,10 @@
 package com.dubovyk.Domain;
 
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
 
 /**
  * Created by knidarkness on 06.05.17.
@@ -19,8 +23,11 @@ public class Song {
     private Long users_voted;
 
     @ManyToOne()
+    @Cascade(CascadeType.SAVE_UPDATE)
     @JoinColumn(name = "band_id")
     private Band band;
+
+    public Song(){}
 
     public Song(String name, Band band, float happiness, float saddness, float frustration, float motivation, float anger, float calmness){
         this.name = name;

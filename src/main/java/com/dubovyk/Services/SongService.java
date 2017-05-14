@@ -9,9 +9,5 @@ import com.dubovyk.Domain.Song;
  * @author Sergey Dubovyk aka knidarkness
  * @version 1.0
  */
-public interface SongService {
-    void save(Song song);
-    void update(Song song);
-    void delete(Song song);
-    void deleteById(Long id);
+public interface SongService extends GenericService<Song, Long>{
 }

@@ -18,10 +18,6 @@ public class Band {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "band")
     private Set<Song> songs;
 
-    public void setSongs(Set<Song> songs) {
-        this.songs = songs;
-    }
-
     public Set<Song> getSongs() {
         return songs;
     }

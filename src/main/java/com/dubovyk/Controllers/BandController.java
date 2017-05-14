@@ -23,10 +23,8 @@ public class BandController {
     }
 
     @PostMapping(path = "/add")
-    public @ResponseBody String addBand(@RequestBody BandWrapperObject body){
-        Band newBand = new Band();
-        newBand.setName(body.getName());
-        bandService.save(newBand);
+    public @ResponseBody String addBand(@RequestBody Band body){
+        bandService.save(body);
         return "added";
     }
 

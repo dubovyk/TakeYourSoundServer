@@ -13,5 +13,5 @@ import java.util.List;
  */
 @Service
 public interface BandService extends GenericService<Band, Long>{
-
+    Band findBandByName(String name);
 }
