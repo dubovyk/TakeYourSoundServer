@@ -11,7 +11,6 @@ import com.dubovyk.Domain.Song;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -48,11 +47,9 @@ public class SongServiceImpl extends GenericServiceImpl<Song, Long> implements S
             public int compare(Song o1, Song o2) {
                 int diff;
                 diff = (Float.valueOf(Math.abs(o1.getHappiness() - happiness)).compareTo(Math.abs(o2.getHappiness() - happiness)));
-                System.out.println("A" + diff);
                 return diff;
             }
         });
-        System.out.println(res);
         return res;
     }
 }
