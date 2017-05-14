@@ -34,7 +34,7 @@ public class UserController {
      */
     @GetMapping(path = "/all")
     public @ResponseBody Iterable<User> getAll(){
-        return userService.getAll();
+        return userService.findAll();
     }
 
     /**
@@ -46,7 +46,7 @@ public class UserController {
     public @ResponseBody String isValid(@RequestBody User user){
         StringBuilder buffer = new StringBuilder();
         buffer.append("{\"status\":\"");
-        if (userService.isUser(user.getEmail(), user.getPasswordHash())){
+        if (userService.isRegisteredUser(user.getEmail(), user.getPasswordHash())){
             buffer.append("true");
         } else {
             buffer.append("false");

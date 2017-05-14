@@ -1,6 +1,10 @@
 package com.dubovyk.Domain;
 
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
 
 /**
  * Created by knidarkness on 06.05.17.
@@ -13,23 +17,23 @@ public class Song {
     private Long id;
 
     private String name, lyrics;
-    private float happiness, saddness, frustration, motivation, anger, calmness;
+    private float happiness, motivation, excitement;
 
     private float average_rate;
     private Long users_voted;
 
     @ManyToOne()
+    @Cascade(CascadeType.SAVE_UPDATE)
     @JoinColumn(name = "band_id")
     private Band band;
 
-    public Song(String name, Band band, float happiness, float saddness, float frustration, float motivation, float anger, float calmness){
+    public Song(){}
+
+    public Song(String name, Band band, float happiness, float motivation, float excitement){
         this.name = name;
         this.happiness = happiness;
-        this.saddness = saddness;
         this.motivation = motivation;
-        this.frustration = frustration;
-        this.anger = anger;
-        this.calmness = calmness;
+        this.excitement = excitement;
         this.band = band;
     }
 
@@ -73,22 +77,6 @@ public class Song {
         this.happiness = happiness;
     }
 
-    public float getSaddness() {
-        return saddness;
-    }
-
-    public void setSaddness(float saddness) {
-        this.saddness = saddness;
-    }
-
-    public float getFrustration() {
-        return frustration;
-    }
-
-    public void setFrustration(float frustration) {
-        this.frustration = frustration;
-    }
-
     public float getMotivation() {
         return motivation;
     }
@@ -97,20 +85,12 @@ public class Song {
         this.motivation = motivation;
     }
 
-    public float getAnger() {
-        return anger;
+    public float getExcitement() {
+        return excitement;
     }
 
-    public void setAnger(float anger) {
-        this.anger = anger;
-    }
-
-    public float getCalmness() {
-        return calmness;
-    }
-
-    public void setCalmness(float calmness) {
-        this.calmness = calmness;
+    public void setExcitement(float excitement) {
+        this.excitement = excitement;
     }
 
     public float getAverage_rate() {
@@ -129,7 +109,8 @@ public class Song {
         this.users_voted = users_voted;
     }
 
-    //public void setBand(Band band) {
-    //    this.band = band;
-    //}
+    @Override
+    public String toString(){
+        return String.valueOf(this.getHappiness());
+    }
 }

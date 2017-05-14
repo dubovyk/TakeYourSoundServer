@@ -23,16 +23,9 @@ public class BandController {
     }
 
     @PostMapping(path = "/add")
-    public @ResponseBody String addBand(@RequestBody BandWrapperObject body){
-        Band newBand = new Band();
-        newBand.setName(body.getName());
-        bandService.save(newBand);
+    public @ResponseBody String addBand(@RequestBody Band body){
+        bandService.save(body);
         return "added";
-    }
-
-    @GetMapping(path = "/get_before", params = "id")
-    public @ResponseBody Iterable<Band> getBefore(@RequestParam  Long id){
-        return bandService.findWithIdLessThen(id);
     }
 
 }

@@ -3,6 +3,7 @@ package com.dubovyk.Services;
 import com.dubovyk.DAO.BandDAO;
 import com.dubovyk.Domain.Band;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,27 +13,17 @@ import java.util.List;
  * Created by knidarkness on 08.05.17.
  */
 @Service("BandService")
-public class BandServiceImpl implements BandService{
+public class BandServiceImpl extends GenericServiceImpl<Band, Long> implements BandService{
+    private final BandDAO dao;
+
     @Autowired
-    private BandDAO bandDAO;
-
-    @Transactional
-    public Iterable<Band> findAll(){
-        return bandDAO.findAll();
+    public BandServiceImpl(BandDAO dao) {
+        super(dao);
+        this.dao = dao;
     }
 
-    @Transactional
-    public Iterable<Band> findWithIdLessThen(Long id){
-        return bandDAO.findAllByIdBefore(id);
-    }
-
-    @Transactional
-    public Iterable<Band> getByNameLike(String pattern){
-        return bandDAO.findAllByNameLike(pattern);
-    }
-
-    @Transactional
-    public void save(Band band){
-        bandDAO.save(band);
+    @Override
+    public Band findBandByName(String name){
+        return dao.findBandByName(name);
     }
 }

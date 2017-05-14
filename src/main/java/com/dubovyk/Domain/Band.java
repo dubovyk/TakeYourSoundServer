@@ -1,5 +1,7 @@
 package com.dubovyk.Domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -16,11 +18,8 @@ public class Band {
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "band")
+    @JsonIgnore
     private Set<Song> songs;
-
-    public void setSongs(Set<Song> songs) {
-        this.songs = songs;
-    }
 
     public Set<Song> getSongs() {
         return songs;
