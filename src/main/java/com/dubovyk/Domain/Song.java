@@ -23,7 +23,7 @@ public class Song {
     private Long users_voted;
 
     @ManyToOne()
-    @Cascade(CascadeType.SAVE_UPDATE)
+    @Cascade(CascadeType.PERSIST)
     @JoinColumn(name = "band_id")
     private Band band;
 
