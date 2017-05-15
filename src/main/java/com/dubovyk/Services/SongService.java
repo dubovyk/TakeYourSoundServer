@@ -13,4 +13,5 @@ import java.util.List;
  */
 public interface SongService extends GenericService<Song, Long>{
     List<Song> findSongsByEmotions(float happiness, float motivation, float excitement);
+    List<Song> findSongsByEmotions(float happiness, float motivation, float excitement, int length);
 }

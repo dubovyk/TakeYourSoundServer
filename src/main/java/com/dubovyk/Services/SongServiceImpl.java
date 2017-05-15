@@ -40,27 +40,34 @@ public class SongServiceImpl extends GenericServiceImpl<Song, Long> implements S
 
     @Override
     public List<Song> findSongsByEmotions(float happiness, float motivation, float excitement){
+        return findSongsByEmotions(happiness, motivation, excitement, 20);
+    }
+
+    @Override
+    public List<Song> findSongsByEmotions(float happiness, float motivation, float excitement, int length){
         List<Song> res = (List) dao.findAll();
 
-        res.sort(new Comparator<Song>() {
-            @Override
-            public int compare(Song o1, Song o2) {
-                int diff;
-                float o1_happiness_dist = (float) Math.pow(o1.getHappiness() - happiness, 2);
-                float o1_motivation_dist = (float) Math.pow(o1.getMotivation() - motivation, 2);
-                float o1_excitement_dist = (float) Math.pow(o1.getExcitement() - excitement, 2);
+        res.sort((o1, o2) -> {
+            int diff;
+            float o1_happiness_dist = (float) Math.pow(o1.getHappiness() - happiness, 2);
+            float o1_motivation_dist = (float) Math.pow(o1.getMotivation() - motivation, 2);
+            float o1_excitement_dist = (float) Math.pow(o1.getExcitement() - excitement, 2);
 
-                float o2_happiness_dist = (float) Math.pow(o2.getHappiness() - happiness, 2);
-                float o2_motivation_dist = (float) Math.pow(o2.getMotivation() - motivation, 2);
-                float o2_excitement_dist = (float) Math.pow(o2.getExcitement() - excitement, 2);
+            float o2_happiness_dist = (float) Math.pow(o2.getHappiness() - happiness, 2);
+            float o2_motivation_dist = (float) Math.pow(o2.getMotivation() - motivation, 2);
+            float o2_excitement_dist = (float) Math.pow(o2.getExcitement() - excitement, 2);
 
-                float o1_dist = (float) Math.sqrt(o1_happiness_dist + o1_motivation_dist + o1_excitement_dist);
-                float o2_dist = (float) Math.sqrt(o2_happiness_dist + o2_motivation_dist + o2_excitement_dist);
+            float o1_dist = (float) Math.sqrt(o1_happiness_dist + o1_motivation_dist + o1_excitement_dist);
+            float o2_dist = (float) Math.sqrt(o2_happiness_dist + o2_motivation_dist + o2_excitement_dist);
 
-                diff = Float.valueOf(o1_dist).compareTo(o2_dist);
-                return diff;
-            }
+            diff = Float.valueOf(o1_dist).compareTo(o2_dist);
+            return diff;
         });
+
+        // Check required number of elements. If exceeds total length return
+        // full list, if not returns required number of elements.
+        res = res.subList(0, (length < res.size()) ? length : res.size());
         return res;
     }
+
 }

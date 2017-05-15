@@ -42,8 +42,13 @@ public class SongController {
     }
 
     @GetMapping(path = "getByEmotions")
-    public @ResponseBody List<Song> findByEmotions(@RequestParam float happiness, @RequestParam float motivation, @RequestParam float excitement){
-        List<Song> res = service.findSongsByEmotions(happiness, motivation, excitement);
+    public @ResponseBody List<Song> findByEmotions(@RequestParam float happiness, @RequestParam float motivation, @RequestParam float excitement, @RequestParam(required = false) Integer size){
+        List<Song> res;
+        if(size == null){
+            res = service.findSongsByEmotions(happiness, motivation, excitement);
+        } else {
+            res = service.findSongsByEmotions(happiness, motivation, excitement, size);
+        }
         System.out.println(res);
         return res;
     }
