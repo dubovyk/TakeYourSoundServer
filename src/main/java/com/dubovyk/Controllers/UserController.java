@@ -1,9 +1,12 @@
 package com.dubovyk.Controllers;
 
+import com.dubovyk.Domain.LoginStatus;
 import com.dubovyk.Domain.User;
 import com.dubovyk.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * This is a REST API endpoint for users operations.
@@ -43,17 +46,14 @@ public class UserController {
      *
      */
     @PostMapping(path = "/isValid")
-    public @ResponseBody String isValid(@RequestBody User user){
-        StringBuilder buffer = new StringBuilder();
-        buffer.append("{\"status\":\"");
-        if (userService.isRegisteredUser(user.getEmail(), user.getPasswordHash())){
-            buffer.append("true");
+    public @ResponseBody LoginStatus isValid(@RequestBody User user){
+        if (userService.isRegisteredUser(user.getUsername(), user.getPasswordHash())){
+            return new LoginStatus(true);
         } else {
-            buffer.append("false");
+            return new LoginStatus(false);
         }
-        buffer.append("\"}");
-        return buffer.toString();
     }
+
 
     /**
      * @param user User object to be added

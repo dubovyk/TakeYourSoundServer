@@ -68,8 +68,8 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements U
      * @return Returns true if given valid credentials and false if not.
      */
     @Transactional
-    public boolean isRegisteredUser(String email, String passhash){
-        return userDAO.findUserByEmailAndPasswordHash(email, passhash) != null;
+    public boolean isRegisteredUser(String username, String passhash){
+        return userDAO.findUserByUsernameAndPasswordHash(username, passhash) != null;
     }
 
     /**
