@@ -21,5 +21,6 @@ import java.util.List;
 public interface UserDAO extends CrudRepository<User, Long>{
     User findUserByEmailAndPasswordHash(String email, String passhash);
     User findUserByUsername(String username);
+    User findUserByUsernameAndPasswordHash(String u_name, String u_pass);
     List<User> findAllByEmailOrUsername(String email, String username);
 }
