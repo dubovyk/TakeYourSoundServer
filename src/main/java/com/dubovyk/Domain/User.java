@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @version 1.0
@@ -29,6 +30,13 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @OneToOne(optional = false)
     private UserRoles userRoles;
+
+    @OneToMany(targetEntity = Playlist.class)
+    private List<Playlist> playlists;
+
+    @OneToOne
+    private Playlist favourites;
+
 
     public User(){}
 
@@ -86,4 +94,19 @@ public class User {
         this.regDate = regDate;
     }
 
+    public List<Playlist> getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(List<Playlist> playlists) {
+        this.playlists = playlists;
+    }
+
+    public Playlist getFavourites() {
+        return favourites;
+    }
+
+    public void setFavourites(Playlist favourites) {
+        this.favourites = favourites;
+    }
 }

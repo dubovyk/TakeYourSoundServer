@@ -21,6 +21,7 @@ public class Song {
 
     private float average_rate;
     private Long users_voted;
+    private Long trackID;
 
     @ManyToOne()
     @Cascade(CascadeType.PERSIST)
@@ -29,12 +30,13 @@ public class Song {
 
     public Song(){}
 
-    public Song(String name, Band band, float happiness, float motivation, float excitement){
+    public Song(String name, Band band, float happiness, float motivation, float excitement, long trackID){
         this.name = name;
         this.happiness = happiness;
         this.motivation = motivation;
         this.excitement = excitement;
         this.band = band;
+        this.trackID = trackID;
     }
 
     public Band getBand(){
@@ -109,8 +111,17 @@ public class Song {
         this.users_voted = users_voted;
     }
 
+    public Long getTrackID() {
+        return trackID;
+    }
+
+    public void setTrackID(Long trackID) {
+        this.trackID = trackID;
+    }
+
     @Override
     public String toString(){
         return String.valueOf(this.getHappiness());
     }
+
 }
