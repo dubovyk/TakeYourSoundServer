@@ -17,11 +17,13 @@ public class BandController {
     @Autowired
     private BandService bandService;
 
+    @CrossOrigin
     @GetMapping(path = "/all")
     public @ResponseBody Iterable<Band> getAll(){
         return bandService.findAll();
     }
 
+    @CrossOrigin
     @PostMapping(path = "/add")
     public @ResponseBody String addBand(@RequestBody Band body){
         bandService.save(body);

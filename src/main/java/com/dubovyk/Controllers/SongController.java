@@ -25,11 +25,13 @@ public class SongController {
         this.service = service;
     }
 
+    @CrossOrigin
     @GetMapping(path = "all")
     public @ResponseBody Iterable<Song> findAll(){
         return service.findAll();
     }
 
+    @CrossOrigin
     @PostMapping(path = "add")
     public @ResponseBody Map<String, String> add(@RequestBody Song song){
         service.save(song);
@@ -41,6 +43,7 @@ public class SongController {
         return res;
     }
 
+    @CrossOrigin
     @GetMapping(path = "getByEmotions")
     public @ResponseBody List<Song> findByEmotions(@RequestParam float happiness, @RequestParam float motivation, @RequestParam float excitement, @RequestParam(required = false) Integer size){
         List<Song> res;
