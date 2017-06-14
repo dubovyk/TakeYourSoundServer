@@ -1,7 +1,10 @@
 package com.dubovyk.Services;
 
+import com.dubovyk.DAO.PlaylistDAO;
 import com.dubovyk.DAO.UserDAO;
 import com.dubovyk.DAO.UserRolesDAO;
+import com.dubovyk.Domain.Playlist;
+import com.dubovyk.Domain.Song;
 import com.dubovyk.Domain.User;
 import com.dubovyk.Domain.UserRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +26,14 @@ import java.util.List;
 public class UserServiceImpl extends GenericServiceImpl<User, Long> implements UserService {
     private final UserDAO userDAO;
     private final UserRolesDAO userRolesDAO;
+    private final PlaylistDAO playlistDAO;
 
     @Autowired
-    public UserServiceImpl(UserDAO userDAO, UserRolesDAO userRolesDAO) {
+    public UserServiceImpl(UserDAO userDAO, UserRolesDAO userRolesDAO, PlaylistDAO playlistDAO) {
         super(userDAO);
         this.userDAO = userDAO;
         this.userRolesDAO = userRolesDAO;
+        this.playlistDAO = playlistDAO;
     }
 
     /**
@@ -57,6 +62,12 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements U
             user.setUserRoles(roles);
 
             userDAO.save(user);
+
+            Playlist favorites = new Playlist();
+            playlistDAO.save(favorites);
+            user.setFavourites(new Playlist());
+            userDAO.save(user);
+
             return true;
         }
         return false;
@@ -84,5 +95,21 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements U
     @Transactional
     public User findByName(String username){
         return userDAO.findUserByUsername(username);
+    }
+
+    @Transactional
+    public boolean addSongToFavorites(User user, Song song){
+        User u = userDAO.findUserByUsername(user.getUsername());
+        if (!u.getFavourites().getSongs().contains(song)){
+            u.getFavourites().addSong(song);
+        }
+        return true;
+    }
+
+    @Transactional
+    public boolean removeSongFromFavorites(User user, Song song){
+        User u = userDAO.findUserByUsername(user.getUsername());
+        u.getFavourites().removeSongByName(song);
+        return true;
     }
 }

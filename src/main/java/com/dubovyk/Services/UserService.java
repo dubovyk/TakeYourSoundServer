@@ -1,5 +1,6 @@
 package com.dubovyk.Services;
 
+import com.dubovyk.Domain.Song;
 import com.dubovyk.Domain.User;
 
 import javax.transaction.Transactional;
@@ -18,4 +19,8 @@ public interface UserService extends GenericService<User, Long>{
     boolean isRegisteredUser(String email, String password);
     @Transactional
     User findByName(String username);
+    @Transactional
+    boolean addSongToFavorites(User user, Song song);
+    @Transactional
+    boolean removeSongFromFavorites(User user, Song song);
 }
