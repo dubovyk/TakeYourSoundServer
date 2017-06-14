@@ -1,6 +1,11 @@
 package com.dubovyk.Controllers;
 
+import com.dubovyk.Domain.AddSongToFavsWrapper;
+import com.dubovyk.Domain.Playlist;
+import com.dubovyk.Domain.Song;
 import com.dubovyk.Domain.User;
+import com.dubovyk.Services.PlaylistService;
+import com.dubovyk.Services.SongService;
 import com.dubovyk.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +27,14 @@ import java.util.Map;
 @RequestMapping(path = "/user")
 public class UserController {
     private final UserService userService;
+    private final SongService songService;
+    private final PlaylistService playlistService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, SongService songService, PlaylistService playlistService) {
         this.userService = userService;
+        this.songService = songService;
+        this.playlistService = playlistService;
     }
 
 
@@ -89,5 +98,47 @@ public class UserController {
             }
         }
         return res;
+    }
+
+    @CrossOrigin
+    @PostMapping(path = "/add_favorites")
+    public @ResponseBody Map<String, String> addToFavourites(@RequestBody AddSongToFavsWrapper wrapper){
+        Map<String, String> res = new HashMap<>();
+        Song target = songService.findById(wrapper.getSong().getId());
+        if (target != null){
+            res.put("status", "done");
+            userService.addSongToFavorites(wrapper.getUser(), target);
+        } else {
+            res.put("status", "failed");
+        }
+        return res;
+    }
+
+    @CrossOrigin
+    @PostMapping(path = "/remove_favorites")
+    public @ResponseBody Map<String, String> removeFromFavorites(@RequestBody AddSongToFavsWrapper wrapper){
+        Map<String, String> res = new HashMap<>();
+        Song target = songService.findById(wrapper.getSong().getId());
+        if (target != null){
+            if(userService.findByName(wrapper.getUser().getUsername()).getFavourites().getSongs().contains(target)){
+
+            }
+            res.put("status", "done");
+            userService.removeSongFromFavorites(wrapper.getUser(), target);
+        } else {
+            res.put("status", "failed");
+        }
+        return res;
+    }
+
+    @CrossOrigin
+    @GetMapping(path = "/get_favorites")
+    public @ResponseBody Playlist getFavorites(@RequestParam String username){
+        User user = userService.findByName(username);
+        if(user == null){
+            return null;
+        } else {
+            return user.getFavourites();
+        }
     }
 }

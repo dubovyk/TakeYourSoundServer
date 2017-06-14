@@ -15,7 +15,7 @@ public class Playlist {
     @Column(name = "idPlaylist")
     private Long id;
 
-    @OneToMany
+    @ManyToMany
     private List<Song> songs;
 
     public Long getId() {

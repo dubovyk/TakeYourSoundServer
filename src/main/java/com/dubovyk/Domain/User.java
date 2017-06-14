@@ -3,6 +3,7 @@ package com.dubovyk.Domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.List;
@@ -31,10 +32,7 @@ public class User {
     @OneToOne(optional = false)
     private UserRoles userRoles;
 
-    @OneToMany(targetEntity = Playlist.class)
-    private List<Playlist> playlists;
-
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL)
     private Playlist favourites;
 
 
@@ -92,14 +90,6 @@ public class User {
 
     public void setRegDate(String regDate) {
         this.regDate = regDate;
-    }
-
-    public List<Playlist> getPlaylists() {
-        return playlists;
-    }
-
-    public void setPlaylists(List<Playlist> playlists) {
-        this.playlists = playlists;
     }
 
     public Playlist getFavourites() {
