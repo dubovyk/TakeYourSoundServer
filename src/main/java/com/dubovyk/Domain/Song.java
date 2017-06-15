@@ -19,6 +19,8 @@ public class Song {
     private String name, lyrics;
     private float happiness, motivation, excitement;
 
+    private int duration;
+
     private float average_rate;
     private Long users_voted;
     private Long trackID;
@@ -37,6 +39,14 @@ public class Song {
         this.excitement = excitement;
         this.band = band;
         this.trackID = trackID;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     public Band getBand(){
