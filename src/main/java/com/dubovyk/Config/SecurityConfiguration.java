@@ -38,6 +38,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/user/all").access("hasRole('USER')")
+                //.antMatchers("/user/get_favorites").access("hasRole('USER')")
+                //.antMatchers("/user/add_favorites").access("hasRole('USER')")
+                //.antMatchers("/user/remove_favorites").access("hasRole('USER')")
+                //.antMatchers("/song/all").access("hasRole('USER')")
+                //.antMatchers("/song/add").access("hasRole('USER')")
+                //.antMatchers("/band/all").access("hasRole('USER')")
+                //.antMatchers("/band/add").access("hasRole('USER')")
                 //.antMatchers("/user/add").access("hasRole('ADMIN')")
                 .and().httpBasic();
     }
